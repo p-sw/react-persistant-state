@@ -72,5 +72,10 @@ export function createPersistantStateStore() {
     return [afterSnapshot, setStateBuilder(stateId)];
   }
 
-  return useState;
+  function deleteState(stateId: string) {
+    delete store[stateId];
+    delete listeners[stateId];
+  }
+
+  return [useState, deleteState];
 }

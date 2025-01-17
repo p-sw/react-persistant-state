@@ -1,3 +1,3 @@
 import { createPersistantStateStore } from "./create";
 
-export const usePersistantState = createPersistantStateStore();
+export const [usePersistantState, deletePersistantState] = createPersistantStateStore();
