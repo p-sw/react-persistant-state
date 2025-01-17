@@ -116,7 +116,6 @@ export function createPersistantStateStore() {
   /**
    * useState simulator for `store[stateId]`
    *
-   * @internal
    * @param stateId
    * @param defaultValue
    */
