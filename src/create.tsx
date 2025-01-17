@@ -165,5 +165,5 @@ export function createPersistantStateStore() {
     return [useSyncExternalStore(subscribeStore, () => store), setStateBuilder, deleteState]
   }
 
-  return [useState, deleteState, useStore];
+  return [useState, deleteState, useStore] as const;
 }
