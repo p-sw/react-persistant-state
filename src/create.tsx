@@ -13,6 +13,14 @@ export function createPersistantStateStore() {
   type Listener = () => void;
   const store: Record<string, unknown> = {};
   const listeners: Record<string, Listener[]> = {};
+  let storeListeners: Listener[] = [];
+
+  function subscribeStore(listener: Listener) {
+    storeListeners.push(listener);
+    return () => {
+      storeListeners = storeListeners.filter((l) => l !== listener);
+    };
+  }
 
   function subscribeState(stateId: string, listener: Listener) {
     if (!(stateId in listeners)) listeners[stateId] = [];
@@ -77,5 +85,9 @@ export function createPersistantStateStore() {
     delete listeners[stateId];
   }
 
-  return [useState, deleteState];
+  function useStore(): [typeof store, typeof setStateBuilder, typeof deleteState] {
+    return [useSyncExternalStore(subscribeStore, () => store), setStateBuilder, deleteState]
+  }
+
+  return [useState, deleteState, useStore];
 }
